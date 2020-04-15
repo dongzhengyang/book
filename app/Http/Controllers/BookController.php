@@ -15,7 +15,12 @@ class BookController extends Controller
 
     public function get(Request $request){
         $id = $request->input('id');
-        $row = \DB::table('book')->where('id','=',$id)->get();
+        $author = $request->input('author');
+        if($id && is_numeric($id)){
+            $row = \DB::table('book')->where('id','=',$id)->get();
+        }else{
+            $row = \DB::table('book')->where('author','=',$author)->get();
+        }
         return response()->json(['message' => '查询单个成功','data'=> $row]);
     }
 
